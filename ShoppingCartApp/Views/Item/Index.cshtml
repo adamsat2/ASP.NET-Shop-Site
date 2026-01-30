@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ShoppingCartApp.Models.Item>
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+    var products = ViewBag.Products as List<ShoppingCartApp.Models.Product>;
+}
+
+<div class="text-start">
+    <h1 class="display-4">Shopping Cart</h1>
+    <img src="~/images/cart.jpg" alt="Shopping Cart" style="max-width: 400px; width: 100%; margin: 20px 0;" />
+</div>
+
+<hr />
+
+<div class="container mt-4 px-0">
+    <div class="row text-center py-2" style="border-bottom: 3px solid black;">
+        <div class="col-2"><strong>Product Image</strong></div>
+        <div class="col-2"><strong>Name</strong></div>
+        <div class="col-2"><strong>Quantity</strong></div>
+        <div class="col-2"><strong>Price</strong></div>
+        <div class="col-2"><strong>Total</strong></div>
+        <div class="col-2"></div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        var productImg = products?.FirstOrDefault(p => p.Name == item.Name)?.ProductImage ?? "/images/placeholder.jpg";
+
+        <div class="row text-center align-items-center py-3" style="border-bottom: 1px solid #dee2e6;">
+            <div class="col-2">
+                <img src="@productImg" alt="@item.Name" style="max-width: 60px; height: auto;" />
+            </div>
+            <div class="col-2">@item.Name</div>
+            <div class="col-2">@item.Quantity</div>
+            <div class="col-2">$@item.Price.ToString("F2")</div>
+            <div class="col-2">$@((item.Price * item.Quantity).ToString("F2"))</div>
+            
+            <div class="col-2">
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm" style="background-color: #6c757d; border: none;">Edit</a>
+                <span class="mx-1">|</span>
+                
+                <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </div>
+        </div>
+    }
+
+    <div class="row mt-4">
+        <div class="col-12 text-start">
+            <h3>Total Price: $@(((decimal)(ViewBag.TotalPrice ?? 0)).ToString("F2"))</h3>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
+</div>

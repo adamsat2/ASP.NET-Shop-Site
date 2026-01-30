@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ShoppingCartApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<div class="text-start">
+    <h1 class="display-4">Manage Products</h1>
+    <img src="~/images/products.jpg" alt="Products Management" style="max-width: 400px; width: 100%; margin: 20px 0;" />
+</div>
+
+<div class="text-start mb-4">
+    <a href="/Product/Create" class="btn btn-primary">Create New Product</a>
+</div>
+
+<hr />
+
+<div class="container mt-4 px-0">
+    <div class="row text-center py-2" style="border-bottom: 3px solid black;">
+        <div class="col-3"><strong>Image</strong></div>
+        <div class="col-3"><strong>Product Name</strong></div>
+        <div class="col-3"><strong>Price</strong></div>
+    </div>
+
+    @foreach (var product in Model)
+    {
+        <div class="row text-center align-items-center py-3" style="border-bottom: 1px solid #dee2e6;">
+            <div class="col-3">
+                <img src="@product.ProductImage" alt="@product.Name" style="max-width: 80px; height: auto;" />
+            </div>
+            <div class="col-3">
+                @product.Name
+            </div>
+            <div class="col-3">
+                $@product.Price.ToString("F2")
+            </div>
+            <div class="col-3">
+                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-secondary btn-sm" style="background-color: #6c757d; border: none;">Edit</a>
+                <span class="mx-1">|</span>
+                <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ShoppingCartApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome To My Online Shop</h1>
+    <img src="~/images/shoppingMain.jpg" alt="Shopping Main" style="max-width: 600px; width: 100%; margin: 20px 0;" />
+</div>
+
+<hr />
+
+<div class="container mt-4">
+    <div class="row text-center py-2" style="border-bottom: 3px solid black;">
+        <div class="col-3"><strong>Image</strong></div>
+        <div class="col-3"><strong>Product Name</strong></div>
+        <div class="col-3"><strong>Price</strong></div>
+        <div class="col-3"></div>
+    </div>
+
+    @foreach (var product in Model)
+    {
+        <div class="row text-center align-items-center py-3" style="border-bottom: 1px solid #dee2e6;">
+            <div class="col-3">
+                <img src="@product.ProductImage" alt="@product.Name" style="max-width: 80px; height: auto;" />
+            </div>
+            <div class="col-3">@product.Name</div>
+            <div class="col-3">$@product.Price.ToString("F2")</div>
+            <div class="col-3">
+                <a asp-controller="Item" asp-action="Add" asp-route-id="@product.Id" class="btn btn-primary btn-sm">Add to Cart</a>
+            </div>
+        </div>
+    }
+</div>
